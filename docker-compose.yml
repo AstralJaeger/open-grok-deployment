@@ -1,0 +1,15 @@
+version: "3.9"# More info at https://github.com/oracle/opengrok/docker/
+services:
+  opengrok:
+    container_name: opengrok
+    image: opengrok/docker:latest
+    ports:
+      - "9090:8080/tcp"
+    environment:
+      SYNC_PERIOD_MINUTES: '60'
+    # Volumes store your data between container upgrades
+    volumes:
+       - '${SOURCE_CODE}/:/opengrok/src/'  # source code
+       - '${OPENGROK_CONF}/opengrok/etc/:/opengrok/etc/'  # folder contains configuration.xml
+       - '${OPENGROK_DATA}/opengrok/data/:/opengrok/data/'  # index and other things for source code
+       - '${SSH_FOLDER}/.ssh:/root/.ssh' # ssh key for git access
